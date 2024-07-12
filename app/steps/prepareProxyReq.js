@@ -25,6 +25,9 @@ function prepareProxyReq(container) {
         as.bufferOrString(bodyContent);
 
       reqOpt.headers['content-length'] = getContentLength(bodyContent);
+      if (reqOpt.headers['transfer-encoding'] && reqOpt.headers['transfer-encoding'] === 'chunked') {
+        delete reqOpt.headers['content-length'];
+      }
 
       if (container.options.reqBodyEncoding) {
         reqOpt.headers['accept-charset'] = container.options.reqBodyEncoding;

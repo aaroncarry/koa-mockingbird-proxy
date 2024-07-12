@@ -17,7 +17,12 @@ function zipOrUnzip(method) {
         flush: zlib.Z_SYNC_FLUSH,
         finishFlush: zlib.Z_SYNC_FLUSH
     };
-    return (isResGzipped(res)) ? zlib[method](rspData, zlibOptions) : rspData;
+
+    if (method === 'gunzipSync') {
+      return (isResGzipped(res)) ? zlib[method](rspData, zlibOptions) : rspData;
+    }
+
+    return (isResGzipped(res)) ? zlib[method](rspData) : rspData;
   };
 }
 
